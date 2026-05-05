@@ -3,19 +3,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checklist SS Guinchos</title><script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script><meta name="theme-color" content="#000000">
-<meta name="mobile-web-app-capable" content="yes"></head><body class="bg-gray-100 p-4"><div class="max-w-xl mx-auto bg-white p-4 rounded-2xl shadow"><h1 class="text-xl font-bold mb-4 text-center">馃殯 Checklist SS Guinchos</h1><form id="form"><!-- ETAPA 1 --><div class="step">
+<meta name="mobile-web-app-capable" content="yes"></head><body class="bg-gray-100 p-4"><div class="max-w-xl mx-auto bg-white p-4 rounded-2xl shadow"><h1 class="text-xl font-bold mb-4 text-center">🚛 Checklist SS Guinchos</h1><form id="form"><!-- ETAPA 1 --><div class="step">
 <h2 class="font-bold mb-2">1. Dados</h2><select id="tipo" class="w-full mb-2 border p-2 rounded">
 <option value="Particular">Particular</option>
 <option value="Seguradora">Seguradora</option>
 </select><input id="seguradora" placeholder="Seguradora" class="w-full mb-2 border p-2 rounded">
-<input id="modelo" placeholder="Modelo do ve铆culo" class="w-full mb-2 border p-2 rounded">
+<input id="modelo" placeholder="Modelo do veículo" class="w-full mb-2 border p-2 rounded">
 <input id="placa" placeholder="Placa" class="w-full mb-2 border p-2 rounded">
 <input id="motorista" placeholder="Motorista" class="w-full mb-2 border p-2 rounded">
 <input id="guincho" placeholder="Placa do Guincho" class="w-full mb-2 border p-2 rounded"></div><!-- ETAPA 2 --><div class="step hidden">
 <h2 class="font-bold mb-2">2. Origem</h2><button type="button" onclick="getLocation()" class="bg-blue-500 text-white p-2 rounded w-full mb-2">
-馃搷 Capturar localiza莽茫o
+📍 Capturar localização
 </button><input id="cidade_origem" placeholder="Cidade origem" class="w-full border p-2 rounded mb-2">
-<input id="endereco_origem" placeholder="Endere莽o completo" class="w-full border p-2 rounded"></div><!-- ETAPA 3 --><div class="step hidden">
+<input id="endereco_origem" placeholder="Endereço completo" class="w-full border p-2 rounded"></div><!-- ETAPA 3 --><div class="step hidden">
 <h2 class="font-bold mb-2">3. Checklist Origem</h2><select id="estado_origem" class="w-full border p-2 mb-2">
 <option>Sem avarias</option>
 <option>Com avarias</option>
@@ -24,7 +24,7 @@
 <option>Sem rodas</option>
 </select><select id="eletrica_origem" class="w-full border p-2">
 <option>Painel liga</option>
-<option>Painel n茫o liga</option>
+<option>Painel não liga</option>
 <option>Bateria ok</option>
 <option>Bateria descarregada</option>
 </select></div><!-- ETAPA 4 --><div class="step hidden">
@@ -40,9 +40,9 @@
 Limpar assinatura
 </button></div><!-- ETAPA 6 --><div class="step hidden">
 <h2 class="font-bold mb-2">6. Destino</h2><button type="button" onclick="getLocationDestino()" class="bg-blue-500 text-white p-2 rounded w-full mb-2">
-馃搷 Capturar destino
+📍 Capturar destino
 </button><input id="cidade_destino" placeholder="Cidade destino" class="w-full border p-2 mb-2">
-<input id="endereco_destino" placeholder="Endere莽o destino" class="w-full border p-2 rounded"></div><!-- ETAPA 7 --><div class="step hidden">
+<input id="endereco_destino" placeholder="Endereço destino" class="w-full border p-2 rounded"></div><!-- ETAPA 7 --><div class="step hidden">
 <h2 class="font-bold mb-2">7. Checklist Destino</h2><select id="estado_destino" class="w-full border p-2">
 <option>Sem novas avarias</option>
 <option>Com avarias</option>
@@ -53,12 +53,12 @@ Limpar assinatura
 Limpar assinatura
 </button></div><!-- FINAL --><div class="step hidden">
 <h2 class="font-bold mb-2">Finalizar</h2><button type="button" onclick="gerarPDF()" class="bg-green-600 text-white p-3 w-full mb-2">
-馃搫 Gerar PDF
+📄 Gerar PDF
 </button><button type="button" onclick="enviarWhats()" class="bg-green-500 text-white p-3 w-full">
-馃摬 Enviar WhatsApp
+📲 Enviar WhatsApp
 </button></div></form><div class="flex justify-between mt-4">
 <button onclick="prev()" class="bg-gray-300 p-2 rounded">Voltar</button>
-<button onclick="next()" class="bg-yellow-500 text-white p-2 rounded">Pr贸ximo</button>
+<button onclick="next()" class="bg-yellow-500 text-white p-2 rounded">Próximo</button>
 </div></div><script>
 
 // ETAPAS
@@ -73,7 +73,7 @@ showStep();
 function next(){ if(current < steps.length-1){ current++; showStep(); } }
 function prev(){ if(current > 0){ current--; showStep(); } }
 
-// GEOLOCALIZA脟脙O
+// GEOLOCALIZAÇÃO
 let lat="", lon="", lat2="", lon2="";
 
 function getLocation(){
@@ -96,16 +96,16 @@ alert("Destino capturado!");
 const signaturePad1 = new SignaturePad(document.getElementById("signature1"));
 const signaturePad2 = new SignaturePad(document.getElementById("signature2"));
 
-// VALIDA脟脙O
+// VALIDAÇÃO
 function validar(){
 
-if(!document.getElementById("modelo").value) return alert("Modelo obrigat贸rio");
-if(!document.getElementById("placa").value) return alert("Placa obrigat贸ria");
-if(!document.getElementById("cidade_origem").value) return alert("Cidade origem obrigat贸ria");
-if(!document.getElementById("cidade_destino").value) return alert("Cidade destino obrigat贸ria");
-if(!document.getElementById("foto_frente").files.length) return alert("Foto frontal obrigat贸ria");
-if(signaturePad1.isEmpty()) return alert("Assinatura origem obrigat贸ria");
-if(signaturePad2.isEmpty()) return alert("Assinatura destino obrigat贸ria");
+if(!document.getElementById("modelo").value) return alert("Modelo obrigatório");
+if(!document.getElementById("placa").value) return alert("Placa obrigatória");
+if(!document.getElementById("cidade_origem").value) return alert("Cidade origem obrigatória");
+if(!document.getElementById("cidade_destino").value) return alert("Cidade destino obrigatória");
+if(!document.getElementById("foto_frente").files.length) return alert("Foto frontal obrigatória");
+if(signaturePad1.isEmpty()) return alert("Assinatura origem obrigatória");
+if(signaturePad2.isEmpty()) return alert("Assinatura destino obrigatória");
 
 return true;
 }
@@ -129,7 +129,7 @@ doc.text("SS GUINCHOS", 10, 10);
 
 doc.setFontSize(11);
 doc.text(`Tipo: ${tipo}`, 10, 20);
-doc.text(`Ve铆culo: ${modelo}`, 10, 30);
+doc.text(`Veículo: ${modelo}`, 10, 30);
 doc.text(`Placa: ${placa}`, 10, 40);
 doc.text(`Origem: ${origem}`, 10, 50);
 doc.text(`Destino: ${destino}`, 10, 60);
@@ -157,11 +157,11 @@ let destino = document.getElementById("cidade_destino").value;
 
 let nome = tipo === "Seguradora" ? seguradora : "Particular";
 
-let msg = `馃殯 SS Guinchos
-馃搶 ${nome}
-馃搷 ${origem} 鈫� ${destino}
-馃殫 ${modelo} - ${placa}
-馃搫 Checklist conclu铆do`;
+let msg = `🚛 SS Guinchos
+📌 ${nome}
+📍 ${origem} → ${destino}
+🚗 ${modelo} - ${placa}
+📄 Checklist concluído`;
 
 window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
 
