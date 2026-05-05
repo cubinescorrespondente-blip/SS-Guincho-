@@ -7,7 +7,7 @@
 <option>Particular</option>
 <option>Seguradora</option>
 </select><input id="seguradora" placeholder="Seguradora" class="w-full mb-2 border p-2 rounded">
-<input id="modelo" placeholder="Modelo do veículo" class="w-full mb-2 border p-2 rounded">
+<input id="modelo" placeholder="Modelo" class="w-full mb-2 border p-2 rounded">
 <input id="placa" placeholder="Placa" class="w-full mb-2 border p-2 rounded">
 <input id="motorista" placeholder="Motorista" class="w-full mb-2 border p-2 rounded">
 <input id="guincho" placeholder="Placa do Guincho" class="w-full mb-2 border p-2 rounded"></div><!-- ETAPA 2 --><div class="step hidden">
@@ -27,11 +27,8 @@
 <option>Bateria ok</option>
 <option>Bateria descarregada</option>
 </select></div><!-- ETAPA 4 --><div class="step hidden">
-<h2 class="font-bold mb-2">4. Fotos Origem</h2><p class="text-sm mb-2">Tire as fotos obrigatórias:</p><input id="foto_frente" type="file" accept="image/*" capture="environment" class="mb-2">
+<h2 class="font-bold mb-2">4. Fotos Origem</h2><input id="foto_frente" type="file" accept="image/*" capture="environment" class="mb-2">
 <input id="foto_traseira" type="file" accept="image/*" capture="environment" class="mb-2">
-<input id="foto_lateral1" type="file" accept="image/*" capture="environment" class="mb-2">
-<input id="foto_lateral2" type="file" accept="image/*" capture="environment" class="mb-2">
-<input id="foto_painel" type="file" accept="image/*" capture="environment" class="mb-2">
 <input id="foto_guincho" type="file" accept="image/*" capture="environment"></div><!-- ETAPA 5 --><div class="step hidden">
 <h2 class="font-bold mb-2">5. Assinatura Origem</h2><canvas id="signature1" class="border w-full h-40"></canvas>
 
@@ -50,7 +47,7 @@ Limpar assinatura
 
 <button type="button" onclick="signaturePad2.clear()" class="bg-red-500 text-white p-2 mt-2 w-full">
 Limpar assinatura
-</button></div><!-- ETAPA FINAL --><div class="step hidden">
+</button></div><!-- FINAL --><div class="step hidden">
 <h2 class="font-bold mb-2">Finalizar</h2><button type="button" onclick="gerarPDF()" class="bg-green-600 text-white p-3 w-full mb-2">
 📄 Gerar PDF
 </button><button type="button" onclick="enviarWhats()" class="bg-green-500 text-white p-3 w-full">
@@ -60,7 +57,6 @@ Limpar assinatura
 <button onclick="next()" class="bg-yellow-500 text-white p-2 rounded">Próximo</button>
 </div></div><script>
 
-// ETAPAS
 let steps = document.querySelectorAll(".step");
 let current = 0;
 
@@ -72,7 +68,6 @@ showStep();
 function next(){ if(current < steps.length-1){ current++; showStep(); } }
 function prev(){ if(current > 0){ current--; showStep(); } }
 
-// GPS
 let lat="", lon="", lat2="", lon2="";
 
 function getLocation(){
@@ -91,52 +86,22 @@ alert("Destino capturado");
 });
 }
 
-// ASSINATURA
 const signaturePad1 = new SignaturePad(document.getElementById("signature1"));
 const signaturePad2 = new SignaturePad(document.getElementById("signature2"));
 
-// VALIDAR
 function validar(){
 
-if(!document.getElementById("modelo").value){
-alert("Modelo obrigatório");
-return false;
-}
-
-if(!document.getElementById("placa").value){
-alert("Placa obrigatória");
-return false;
-}
-
-if(!document.getElementById("cidade_origem").value){
-alert("Cidade origem obrigatória");
-return false;
-}
-
-if(!document.getElementById("cidade_destino").value){
-alert("Cidade destino obrigatória");
-return false;
-}
-
-if(!document.getElementById("foto_frente").files.length){
-alert("Foto frontal obrigatória");
-return false;
-}
-
-if(signaturePad1.isEmpty()){
-alert("Assinatura da origem obrigatória");
-return false;
-}
-
-if(signaturePad2.isEmpty()){
-alert("Assinatura do destino obrigatória");
-return false;
-}
+if(!document.getElementById("modelo").value) return alert("Modelo obrigatório");
+if(!document.getElementById("placa").value) return alert("Placa obrigatória");
+if(!document.getElementById("cidade_origem").value) return alert("Cidade origem obrigatória");
+if(!document.getElementById("cidade_destino").value) return alert("Cidade destino obrigatória");
+if(!document.getElementById("foto_frente").files.length) return alert("Foto frontal obrigatória");
+if(signaturePad1.isEmpty()) return alert("Assinatura origem obrigatória");
+if(signaturePad2.isEmpty()) return alert("Assinatura destino obrigatória");
 
 return true;
 }
 
-// PDF
 function gerarPDF(){
 
 if(!validar()) return;
@@ -144,32 +109,23 @@ if(!validar()) return;
 const { jsPDF } = window.jspdf;
 let doc = new jsPDF();
 
-let tipo = document.getElementById("tipo").value;
 let modelo = document.getElementById("modelo").value;
 let placa = document.getElementById("placa").value;
 let origem = document.getElementById("cidade_origem").value;
 let destino = document.getElementById("cidade_destino").value;
 
-doc.setFontSize(16);
-doc.text("SS GUINCHOS", 10, 10);
+doc.text("SS GUINCHOS",10,10);
+doc.text(`Veículo: ${modelo}`,10,20);
+doc.text(`Placa: ${placa}`,10,30);
+doc.text(`Origem: ${origem}`,10,40);
+doc.text(`Destino: ${destino}`,10,50);
 
-doc.setFontSize(12);
-doc.text(`Tipo: ${tipo}`, 10, 20);
-doc.text(`Veículo: ${modelo}`, 10, 30);
-doc.text(`Placa: ${placa}`, 10, 40);
-doc.text(`Origem: ${origem}`, 10, 50);
-doc.text(`Destino: ${destino}`, 10, 60);
+doc.addImage(signaturePad1.toDataURL(),"PNG",10,60,60,20);
+doc.addImage(signaturePad2.toDataURL(),"PNG",110,60,60,20);
 
-doc.addImage(signaturePad1.toDataURL(),"PNG",10,70,60,20);
-doc.text("Origem",10,95);
-
-doc.addImage(signaturePad2.toDataURL(),"PNG",110,70,60,20);
-doc.text("Destino",110,95);
-
-doc.save(`SS_${modelo}_${placa}_${origem}-${destino}.pdf`);
+doc.save(`SS_${modelo}_${placa}.pdf`);
 }
 
-// WHATSAPP
 function enviarWhats(){
 
 let modelo = document.getElementById("modelo").value;
@@ -180,7 +136,7 @@ let destino = document.getElementById("cidade_destino").value;
 let msg = `🚛 SS Guinchos
 📍 ${origem} > ${destino}
 🚗 ${modelo} - ${placa}
-📄 Relatório gerado`;
+📄 Relatório pronto`;
 
 window.open("https://wa.me/?text=" + encodeURIComponent(msg));
 
